@@ -39,7 +39,7 @@ project(
 include(GNUInstallDirs)
 
 option(CLI_BuildExamples "Build the examples." OFF)
-option(CLI_BuildTests "Build the unit tests." OFF)
+option(CLI_BuildTests "Build the unit tests." ON)
 option(CLI_UseBoostAsio "Use the boost asio library." OFF)
 option(CLI_UseStandaloneAsio "Use the standalone asio library." OFF)
 
@@ -113,10 +113,12 @@ if (CLI_BuildExamples)
 endif()
 
 # Tests
-if (CLI_BuildTests)
-    enable_testing()
-    add_subdirectory(test)
-endif()
+enable_testing()
+add_subdirectory(test)
+#if (CLI_BuildTests)
+#    enable_testing()
+#    add_subdirectory(test)
+#endif()
 
 # Install
 if(NOT CMAKE_SKIP_INSTALL_RULES)

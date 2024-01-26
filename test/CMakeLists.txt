@@ -29,6 +29,8 @@
 
 cmake_minimum_required(VERSION 3.8)
 project(cli_test)
+# Add the following line before the 'enable_testing()' command
+set(CMAKE_CTEST_ARGUMENTS "--verbose")
 enable_testing()
 
 set(Boost_ADDITIONAL_VERSIONS "1.66" "1.66.0")
