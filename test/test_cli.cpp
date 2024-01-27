@@ -57,7 +57,7 @@ string ExtractLastPrompt(const stringstream& o)
 
 cli> sub> foo
 bar
-sub> 
+sub>
 
 and gives
 
@@ -133,6 +133,11 @@ BOOST_AUTO_TEST_CASE(Basics)
     BOOST_CHECK_EQUAL(ExtractFirstPrompt(oss), "cli");
     BOOST_CHECK_EQUAL(ExtractLastPrompt(oss), "cli");
     BOOST_CHECK_EQUAL(ExtractContent(oss), R"(foo 'bar' "foo\2)");
+
+    UserInput(cli, oss, "string_cmd boo");
+    BOOST_CHECK_EQUAL(ExtractFirstPrompt(oss), "cli");
+    BOOST_CHECK_EQUAL(ExtractLastPrompt(oss), "cli");
+    BOOST_CHECK_EQUAL(ExtractContent(oss), "boo");
 }
 
 BOOST_AUTO_TEST_CASE(parameters)
@@ -368,6 +373,14 @@ BOOST_AUTO_TEST_CASE(Submenus)
     UserInput(cli, oss, "sub\nstring_cmd foo");
     BOOST_CHECK_EQUAL(ExtractLastPrompt(oss), "sub");
     BOOST_CHECK_EQUAL(ExtractContent(oss), "foo");
+
+    UserInput(cli, oss, "help");
+    BOOST_CHECK_EQUAL(ExtractFirstPrompt(oss), "cli");
+    BOOST_CHECK_EQUAL(ExtractLastPrompt(oss), "cli");
+    BOOST_CHECK(ExtractContent(oss).find("sub") != string::npos);
+    BOOST_CHECK(ExtractContent(oss).find("help") != string::npos);
+    BOOST_CHECK(ExtractContent(oss).find("exit") != string::npos);
+
 }
 
 BOOST_AUTO_TEST_CASE(EnterActions)
